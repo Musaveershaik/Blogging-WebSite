@@ -12,10 +12,7 @@ const app = express();
 const PORT = 3000;
 
 // Database connection
-mongoose.connect('mongodb://localhost:27017/Blogs', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGODB_URL || 'mongodb+srv://<username>:<password>@cluster0.mongodb.net/Blogs')
 .then(() => console.log('Connected to MongoDB'))
 .catch((err) => console.error('MongoDB connection error:', err));
 
