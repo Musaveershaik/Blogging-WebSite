@@ -172,6 +172,13 @@
                                         Published on <%= blog.createdAt.toLocaleDateString('en-US', { year: 'numeric' ,
                                             month: 'long' , day: 'numeric' }) %>
                                     </span>
+                                    <% if (user && blog.author._id.toString() === user._id.toString()) { %>
+                                        <form action="/blog/<%= blog._id %>/delete" method="POST" class="d-inline ml-3" onsubmit="return confirm('Are you sure you want to delete this blog?');">
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash"></i> Delete Blog
+                                            </button>
+                                        </form>
+                                    <% } %>
                                 </div>
                             </header>
 

@@ -164,4 +164,31 @@ router.post('/:id/comment', checkAuth, async (req, res) => {
     }
 });
 
+// Delete blog route
+router.post('/:id/delete', checkAuth, async (req, res) => {
+    try {
+        const blog = await Blog.findById(req.params.id);
+        
+        if (!blog) {
+            return res.redirect('/');
+        }
+
+        // Check if user is the author of the blog
+        if (blog.author.toString() !== req.user._id.toString()) {
+            return res.redirect('/');
+        }
+
+        // Delete associated comments
+        await Comment.deleteMany({ blog: req.params.id });
+        
+        // Delete the blog
+        await Blog.findByIdAndDelete(req.params.id);
+        
+        res.redirect('/');
+    } catch (error) {
+        console.error('Blog deletion error:', error);
+        res.redirect('/');
+    }
+});
+
 module.exports = router;
