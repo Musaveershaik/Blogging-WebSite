@@ -13,10 +13,7 @@ const PORT = 3000;
 
 // Database connection
 mongoose
-    .connect(
-        process.env.MONGODB_URL ||
-            "mongodb+srv://musaveershaikh43:Mohammad@143@cluster0.mongodb.net/Blogs",
-    )
+    .connect(process.env.MONGODB_URL)
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.error("MongoDB connection error:", err));
 
