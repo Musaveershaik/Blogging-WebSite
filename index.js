@@ -12,9 +12,12 @@ const app = express();
 const PORT = 3000;
 
 // Database connection
-mongoose
-.connect(mongodb+srv://musaveershaikh43:Mohammad@143@cluster0.1onuz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0, {
-
+mongoose.connect("mongodb+srv://musaveershaikh43:<password>@cluster0.1onuz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+    serverApi: {
+        version: '1',
+        strict: true,
+        deprecationErrors: true
+    }
 })
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.error("MongoDB connection error:", err));
