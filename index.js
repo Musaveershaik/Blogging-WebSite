@@ -7,20 +7,23 @@ const { validateToken } = require("./services/authentication");
 const Blog = require("./models/blog");
 const User = require("./models/user");
 const userRoutes = require("./routes/user");
+require("dotenv").config(); // Load environment variables
 
 const app = express();
 const PORT = 3000;
 
-// Database connection
-mongoose.connect("mongodb+srv://musaveershaikh43:<password>@cluster0.1onuz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
-    serverApi: {
-        version: '1',
-        strict: true,
-        deprecationErrors: true
-    }
-})
-    .then(() => console.log("Connected to MongoDB"))
-    .catch((err) => console.error("MongoDB connection error:", err));
+// ✅ Use the fixed MongoDB URI
+const mongoURI = "mongodb+srv://musaveershaikh43:Mohammad%40143@cluster0.1onuz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// ✅ Connect to MongoDB
+mongoose
+  .connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 30000, // Increase timeout to 30s
+  })
+  .then(() => console.log("✅ MongoDB Connected Successfully!"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err.message));
 
 // View engine setup
 app.set("view engine", "ejs");
@@ -47,14 +50,12 @@ const checkAuth = async (req, res, next) => {
     }
 
     try {
-        // Fetch complete user data from database
         const user = await User.findById(userData.userId);
         if (!user) {
             res.clearCookie("token");
             return res.redirect("/login");
         }
 
-        // Make user data available to views
         res.locals.user = user;
         res.locals.userId = user._id;
         res.locals.userRole = user.role;
@@ -79,7 +80,7 @@ app.use(userRoutes);
 
 // Mount blog routes with base path
 const blogRoutes = require("./routes/blog");
-app.use("/blog", blogRoutes); // Add base path '/blog'
+app.use("/blog", blogRoutes);
 
 // Protected route
 app.get("/", checkAuth, async (req, res) => {
@@ -103,5 +104,5 @@ app.get("/", checkAuth, async (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`🚀 Server is running on port ${PORT}`);
 });
