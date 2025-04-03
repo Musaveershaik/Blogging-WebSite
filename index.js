@@ -1,4 +1,5 @@
 const path = require('path');
+const bcrypt = require('bcryptjs');
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
