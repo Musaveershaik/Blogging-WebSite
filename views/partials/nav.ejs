@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/" style="font-family: 'Georgia', serif; font-size: 1.5rem;">عِلْم</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <% if (locals.user) { %>
+                    <li class="nav-item px-2">
+                        <a class="nav-link" href="/" style="font-family: 'Georgia', serif;">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link" href="/blog/create-blog" style="font-family: 'Georgia', serif;">
+                            <i class="fas fa-plus"></i> Create Post
+                        </a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link" href="/profile" style="font-family: 'Georgia', serif;">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-danger btn-sm" href="/logout" style="font-family: 'Georgia', serif;">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item px-2">
+                        <a class="nav-link" href="/login" style="font-family: 'Georgia', serif;">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup" style="font-family: 'Georgia', serif;">
+                            <i class="fas fa-user-plus"></i> Sign Up
+                        </a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<style>
+    .navbar-dark .navbar-nav .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        transition: color 0.3s ease;
+    }
+    .navbar-dark .navbar-nav .nav-link:hover,
+    .navbar-dark .navbar-nav .nav-link:focus {
+        color: #ffffff;
+    }
+    .navbar-dark .navbar-brand:hover,
+    .navbar-dark .navbar-brand:focus {
+        color: #ffffff;
+    }
+</style>

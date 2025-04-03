@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+    <title>Create Blog - Blog App</title>
+</head>
+<body>
+    <%- include('partials/nav') %>
+    <script src="https://unpkg.com/lexical@0.3.0/dist/lexical.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editorContainer = document.getElementById('editor-container');
+            const editor = LexicalComposer({
+                editorState: EditorState.create(),
+            }).refObject;
+
+            editorContainer.innerHTML = '';
+            editorContainer.appendChild(editor.domElement);
+
+            editor.update(() => {
+                const initialConfig = {
+                    namespace: 'myapp',
+                };
+                const root = $createRootNode();
+                const selection = $createSelection();
+                const editorState = EditorState.create({
+                    root,
+                    selection,
+                });
+
+                editor._updateEditorState(editorState, initialConfig);
+            });
+        });
+    </script>
+    <div id="editor-container"></div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body p-5">
+                        <h3 class="card-title text-center mb-4">Create New Blog</h3>
+                        <form action="/blog/create-blog" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="body" class="form-label">Content</label>
+                                <textarea class="form-control" id="body" name="body" rows="6" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="coverImage" class="form-label">Cover Image (Optional)</label>
+                                <input type="file" class="form-control" id="coverImage" name="coverImage" accept="image/*">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Create Blog</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/scripts') %>
+</body>
+</html>

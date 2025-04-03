@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+    <title>Home - Blog App</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        .blog-card {
+            transition: transform 0.3s ease-in-out;
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+        .blog-image {
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .blog-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #495057;
+        }
+        .blog-meta {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        .blog-excerpt {
+            font-size: 0.95rem;
+            color: #495057;
+        }
+        .read-more-btn {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s ease;
+        }
+        .read-more-btn:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/nav') %>
+    
+    <main class="container mt-5">
+        <header class="mb-5">
+            <h1 class="display-4">Welcome, <%= user.fullname %></h1>
+        </header>
+        
+        <% if (blogs && blogs.length > 0) { %>
+            <div class="row">
+                <% blogs.forEach(blog => { %>
+                    <div class="col-md-6 mb-4">
+                        <article class="card h-100 shadow-sm blog-card">
+                            <% if (blog.coverImage) { %>
+                                <img src="<%= blog.coverImage %>"
+                                     class="card-img-top blog-image" 
+                                     alt="Cover image for <%= blog.title %>">
+                            <% } %>
+                            <div class="card-body d-flex flex-column">
+                                <h2 class="card-title blog-title"><%= blog.title %></h2>
+                                <div class="blog-meta mb-2">
+                                    <span>By <%= blog.author.fullname %></span> • 
+                                    <time datetime="<%= blog.createdAt.toISOString() %>">
+                                        <%= new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                                    </time>
+                                </div>
+                                <p class="card-text blog-excerpt flex-grow-1"><%= blog.body.substring(0, 150) %>...</p>
+                                <a href="/blog/<%= blog._id %>" class="btn btn-primary read-more-btn mt-auto">Read More</a>
+                            </div>
+                        </article>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="alert alert-info" role="alert">
+                <p class="mb-0">No blogs found. <a href="/blog/create-blog" class="alert-link">Create your first blog!</a></p>
+            </div>
+        <% } %>
+    </main>
+
+    <footer class="container mt-5 mb-4">
+        <hr>
+        <p class="text-muted text-center">
+            &copy; <%= new Date().getFullYear() %> Your Blog App. All rights reserved.
+        </p>
+    </footer>
+
+    <%- include('partials/scripts') %>
+</body>
+</html>

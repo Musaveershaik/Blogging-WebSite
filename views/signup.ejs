@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head') %>
+        <title>Sign Up</title>
+</head>
+
+<style>
+    body {
+        font-family: 'Georgia', serif;
+        line-height: 1.6;
+        color: #333;
+    }
+</style>
+
+<body>
+    <%- include('partials/nav') %>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <% if (message) { %>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <%= message %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% } %>
+                    
+                    <div class="card">
+                        <div class="card-body p-5">
+                            <h3 class="card-title text-center mb-4">Sign Up</h3>
+                            <form action="/signup" method="POST">
+                                <div class="mb-3">
+                                    <label for="fullname" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="fullname" name="fullname" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                            </form>
+                            <p class="text-center mt-3">
+                                Already have an account? <a href="/login">Login</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('partials/scripts') %>
+</body>
+
+</html> 
