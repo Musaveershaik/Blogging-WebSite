@@ -11,3 +11,15 @@ deploymentTarget = "cloudrun"
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[workflows]
+runButton = "Run Server"
+
+[[workflows.workflow]]
+name = "Run Server"
+author = 40401235
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"

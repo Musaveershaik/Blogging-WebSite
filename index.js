@@ -10,7 +10,7 @@ const userRoutes = require("./routes/user");
 require("dotenv").config(); // Load environment variables
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // ✅ Use the fixed MongoDB URI
 const mongoURI = "mongodb+srv://musaveershaikh43:Mohammad%40143@cluster0.1onuz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
