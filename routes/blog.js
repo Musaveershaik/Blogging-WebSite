@@ -86,15 +86,18 @@ router.post('/create-blog', checkAuth, upload.single('coverImage'), async (req, 
     try {
         const { title, body } = req.body;
         
+        const { coverImageUrl } = req.body;
         const blogData = {
             title,
             body,
             author: req.user._id
         };
 
-        // Only add coverImage if a file was uploaded
+        // Handle either uploaded file or URL
         if (req.file) {
-            blogData.coverImage = `/uploads/${req.file.filename}`;  // Store the path relative to public directory
+            blogData.coverImage = `/uploads/${req.file.filename}`;
+        } else if (coverImageUrl) {
+            blogData.coverImage = coverImageUrl;
         }
 
         const blog = await Blog.create(blogData);

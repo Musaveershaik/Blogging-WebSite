@@ -183,9 +183,14 @@
                             </header>
 
                             <% if (blog.coverImage) { %>
-                                <img src="<%= blog.coverImage %>" style="height: 400px; object-fit: cover;" class="blog-image mb-4"
-                                    alt="Cover Image for <%= blog.title %>">
-                                <% } %>
+                                <img 
+                                    src="<%= blog.coverImage.startsWith('http') ? blog.coverImage : blog.coverImage %>" 
+                                    style="height: 400px; width: 100%; object-fit: cover;" 
+                                    class="blog-image mb-4"
+                                    alt="Cover Image for <%= blog.title %>"
+                                    onerror="this.onerror=null; this.src='/images/default.png';"
+                                >
+                            <% } %>
 
                                     <div class="blog-body">
                                         <%- blog.body %>
