@@ -1,7 +1,37 @@
 const { Router } = require("express");
 const User = require("../models/user");
-const { createToken } = require('../services/authentication');
+const { createToken, validateToken } = require('../services/authentication');
 const router = Router();
+
+// Authentication middleware
+const checkAuth = async (req, res, next) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.redirect('/login');
+    }
+
+    const userData = validateToken(token);
+    if (!userData) {
+        res.clearCookie('token');
+        return res.redirect('/login');
+    }
+
+    try {
+        const user = await User.findById(userData.userId);
+        if (!user) {
+            res.clearCookie('token');
+            return res.redirect('/login');
+        }
+
+        req.user = user;
+        next();
+    } catch (error) {
+        console.error('Auth middleware error:', error);
+        res.clearCookie('token');
+        return res.redirect('/login');
+    }
+};
 
 // Middleware to check if user is already logged in
 const redirectIfAuthenticated = (req, res, next) => {
