@@ -106,7 +106,7 @@ router.post("/login", redirectIfAuthenticated, async (req, res) => {
 });
 
 // Profile route
-router.get("/profile", checkAuth, async (req, res) => {
+router.get("/profile", async (req, res) => {
     try {
         const Blog = require('../models/blog');
         const userBlogs = await Blog.find({ author: req.user._id })
