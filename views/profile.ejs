@@ -1,0 +1,48 @@
+
+<%- include('partials/head') %>
+
+<body>
+    <%- include('partials/nav') %>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4 text-center mb-4">
+                <img src="<%= user.profileImage %>" alt="Profile Image" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                <h2><%= user.fullname %></h2>
+                <p class="text-muted"><%= user.email %></p>
+            </div>
+            
+            <div class="col-md-8">
+                <h3 class="mb-4">Blogs You Created</h3>
+                <% if (blogs.length > 0) { %>
+                    <div class="row">
+                        <% blogs.forEach(blog => { %>
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 shadow-sm">
+                                    <% if (blog.coverImage) { %>
+                                        <img src="<%= blog.coverImage %>" class="card-img-top" alt="Blog cover" style="height: 200px; object-fit: cover;">
+                                    <% } %>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= blog.title %></h5>
+                                        <p class="card-text text-muted">
+                                            <small>Created on <%= new Date(blog.createdAt).toLocaleDateString() %></small>
+                                        </p>
+                                        <a href="/blog/<%= blog._id %>" class="btn btn-primary">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <div class="alert alert-info">
+                        You haven't created any blogs yet. 
+                        <a href="/blog/create-blog" class="alert-link">Create your first blog!</a>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/scripts') %>
+</body>
+</html>

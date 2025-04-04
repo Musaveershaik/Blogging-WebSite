@@ -105,6 +105,23 @@ router.post("/login", redirectIfAuthenticated, async (req, res) => {
     }
 });
 
+// Profile route
+router.get("/profile", async (req, res) => {
+    try {
+        const Blog = require('../models/blog');
+        const userBlogs = await Blog.find({ author: req.user._id })
+            .sort({ createdAt: -1 });
+        
+        res.render("profile", {
+            user: req.user,
+            blogs: userBlogs
+        });
+    } catch (error) {
+        console.error("Profile error:", error);
+        res.redirect("/");
+    }
+});
+
 // Add logout route
 router.get("/logout", (req, res) => {
     res.clearCookie('token');
