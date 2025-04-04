@@ -1,38 +1,25 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <%- include('partials/head') %>
     <title>Create Blog - Blog App</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .preview-section {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .preview-content img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
     <%- include('partials/nav') %>
-    <script src="https://unpkg.com/lexical@0.3.0/dist/lexical.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const editorContainer = document.getElementById('editor-container');
-            const editor = LexicalComposer({
-                editorState: EditorState.create(),
-            }).refObject;
-
-            editorContainer.innerHTML = '';
-            editorContainer.appendChild(editor.domElement);
-
-            editor.update(() => {
-                const initialConfig = {
-                    namespace: 'myapp',
-                };
-                const root = $createRootNode();
-                const selection = $createSelection();
-                const editorState = EditorState.create({
-                    root,
-                    selection,
-                });
-
-                editor._updateEditorState(editorState, initialConfig);
-            });
-        });
-    </script>
-    <div id="editor-container"></div>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -45,7 +32,11 @@
                                 <input type="text" class="form-control" id="title" name="title" required>
                             </div>
                             <div class="mb-3">
-                                <label for="body" class="form-label">Content</label>
+                                <label for="subtitle" class="form-label">Subtitle</label>
+                                <input type="text" class="form-control" id="subtitle" name="subtitle" placeholder="Enter a brief subtitle (optional)">
+                            </div>
+                            <div class="mb-3">
+                                <label for="body" class="form-label">Content (Supports Markdown)</label>
                                 <textarea class="form-control" id="body" name="body" rows="6" required></textarea>
                             </div>
                             <div class="mb-3">
@@ -55,6 +46,11 @@
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Create Blog</button>
                         </form>
+                        
+                        <div class="preview-section">
+                            <h4>Preview</h4>
+                            <div id="preview" class="preview-content"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,5 +58,23 @@
     </div>
 
     <%- include('partials/scripts') %>
+    <script>
+        document.getElementById('body').addEventListener('input', function() {
+            const content = this.value;
+            const preview = document.getElementById('preview');
+            preview.innerHTML = marked.parse(content);
+        });
+
+        document.getElementById('title').addEventListener('input', function() {
+            const titlePreview = document.createElement('h1');
+            titlePreview.textContent = this.value;
+            const preview = document.getElementById('preview');
+            const existingTitle = preview.querySelector('h1');
+            if (existingTitle) {
+                preview.removeChild(existingTitle);
+            }
+            preview.insertBefore(titlePreview, preview.firstChild);
+        });
+    </script>
 </body>
 </html>
