@@ -5,10 +5,6 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    subtitle: {
-        type: String,
-        required: false
-    },
     body: {
         type: String,
         required: true
