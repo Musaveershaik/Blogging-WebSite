@@ -111,20 +111,4 @@ router.get("/logout", (req, res) => {
     res.redirect("/login");
 });
 
-// Profile route
-router.get("/profile", async (req, res) => {
-    try {
-        const blogs = await Blog.find({ author: req.user._id })
-            .sort({ createdAt: -1 });
-        
-        res.render("profile", {
-            user: req.user,
-            blogs: blogs
-        });
-    } catch (error) {
-        console.error("Profile error:", error);
-        res.redirect("/");
-    }
-});
-
 module.exports = router;
