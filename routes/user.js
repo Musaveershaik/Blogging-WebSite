@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const User = require("../models/user");
-const { createToken } = require('../services/authentication');
+const { createToken, validateToken } = require('../services/authentication');
 const router = Router();
 
 // Middleware to check if user is already logged in
