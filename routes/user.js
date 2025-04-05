@@ -108,12 +108,29 @@ router.post("/login", redirectIfAuthenticated, async (req, res) => {
 // Profile route
 router.get("/profile/user", async (req, res) => {
     try {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.redirect('/login');
+        }
+
+        const userData = validateToken(token);
+        if (!userData) {
+            res.clearCookie('token');
+            return res.redirect('/login');
+        }
+
+        const user = await User.findById(userData.userId);
+        if (!user) {
+            res.clearCookie('token');
+            return res.redirect('/login');
+        }
+
         const Blog = require('../models/blog');
-        const userBlogs = await Blog.find({ author: req.user._id })
+        const userBlogs = await Blog.find({ author: user._id })
             .sort({ createdAt: -1 });
         
         res.render("profile", {
-            user: req.user,
+            user: user,
             blogs: userBlogs
         });
     } catch (error) {
