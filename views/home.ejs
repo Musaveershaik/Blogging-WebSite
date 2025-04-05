@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <%- include('partials/head') %>
     <title>Home - Blog App</title>
     <style>
@@ -71,7 +72,7 @@
                                         <%= new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
                                     </time>
                                 </div>
-                                <p class="card-text blog-excerpt flex-grow-1"><%= blog.body.substring(0, 150) %>...</p>
+                                <p class="card-text blog-excerpt flex-grow-1"><%- marked(blog.body.substring(0, 150)) %>...</p>
                                 <a href="/blog/<%= blog._id %>" class="btn btn-primary read-more-btn mt-auto">Read More</a>
                             </div>
                         </article>
