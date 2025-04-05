@@ -72,7 +72,7 @@
                                         <%= new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
                                     </time>
                                 </div>
-                                <p class="card-text blog-excerpt flex-grow-1"><%- marked(blog.body.substring(0, 150)) %>...</p>
+                                <p class="card-text blog-excerpt flex-grow-1"><%- locals.marked(blog.body.substring(0, 150)) %>...</p>
                                 <a href="/blog/<%= blog._id %>" class="btn btn-primary read-more-btn mt-auto">Read More</a>
                             </div>
                         </article>

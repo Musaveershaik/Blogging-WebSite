@@ -3,10 +3,17 @@ const bcrypt = require("bcryptjs");
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const { marked } = require("marked");
 const { validateToken } = require("./services/authentication");
 const Blog = require("./models/blog");
 const User = require("./models/user");
 const userRoutes = require("./routes/user");
+
+// Configure marked options
+marked.setOptions({
+    breaks: true,  // Convert \n to <br>
+    gfm: true,     // GitHub Flavored Markdown
+});
 require("dotenv").config(); // Load environment variables
 
 const app = express();
@@ -59,6 +66,7 @@ const checkAuth = async (req, res, next) => {
         res.locals.user = user;
         res.locals.userId = user._id;
         res.locals.userRole = user.role;
+        res.locals.marked = marked;
         req.user = user;
 
         next();
