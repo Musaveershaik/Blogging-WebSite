@@ -77,6 +77,10 @@ Then,
 ```bash
 cd Blogging-WebSite
 ```
+Install Packages
+```bash
+npm init
+```
 
 To run the application in development mode:
 ```bash
