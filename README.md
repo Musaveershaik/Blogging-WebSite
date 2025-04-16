@@ -69,6 +69,19 @@ The application uses the following environment variables:
 
 ## Running the Application
 
+To Clone the application:
+```bash
+git clone https://github.com/Musaveershaik/Blogging-WebSite.git
+```
+Then,
+```bash
+cd Blogging-WebSite
+```
+Install Packages
+```bash
+npm init
+```
+
 To run the application in development mode:
 ```bash
 npm run dev
